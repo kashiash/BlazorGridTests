@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
@@ -14,10 +15,9 @@ namespace BlazorGridTests.Module.BusinessObjects
 	[DefaultClassOptions]
 	[DomainComponent]
 	[NonPersistent]
-	public class BlazorLayoutStorage : BaseObject
+	public class BlazorLayoutStorage : NonPersistentBaseObject
 	{
-		public BlazorLayoutStorage(Session session) : base(session)
-		{ }
+
 
 
 		string layout;
@@ -28,14 +28,14 @@ namespace BlazorGridTests.Module.BusinessObjects
 		public string ViewId
 		{
 			get => viewId;
-			set => SetPropertyValue(nameof(ViewId), ref viewId, value);
+			set => SetPropertyValue( ref viewId, value);
 		}
 
 
 		public Guid PermissionPolicyUser
 		{
 			get => permissionPolicyUser;
-			set => SetPropertyValue(nameof(PermissionPolicyUser), ref permissionPolicyUser, value);
+			set => SetPropertyValue( ref permissionPolicyUser, value);
 		}
 
 		
@@ -43,7 +43,7 @@ namespace BlazorGridTests.Module.BusinessObjects
 		public string Layout
 		{
 			get => layout;
-			set => SetPropertyValue(nameof(Layout), ref layout, value);
+			set => SetPropertyValue( ref layout, value);
 		}
 
 	}

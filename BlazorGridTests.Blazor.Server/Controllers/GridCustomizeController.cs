@@ -53,7 +53,7 @@ namespace BlazorGridTests.Module.Controllers
             base.OnViewControlsCreated();
             if (objectSpace == null)
             {
-                objectSpace = Application.CreateObjectSpace();
+                objectSpace = Application.CreateObjectSpace(typeof(BlazorLayoutStorage));
             }
 
             if (View.Editor is DxGridListEditor gridListEditor)
@@ -128,6 +128,7 @@ namespace BlazorGridTests.Module.Controllers
                 storage.PermissionPolicyUser = (Guid)SecuritySystem.CurrentUserId;
             }
             storage.Layout = json;
+           
             objectSpace.CommitChanges();
         }
     }
