@@ -12,39 +12,42 @@ using System.Threading.Tasks;
 
 namespace BlazorGridTests.Module.BusinessObjects
 {
-	[DefaultClassOptions]
-	[DomainComponent]
-	[NonPersistent]
-	public class BlazorLayoutStorage : NonPersistentBaseObject
+
+	public class BlazorLayoutStorage 
 	{
 
 
 
-		string layout;
-		Guid permissionPolicyUser;
-		string viewId;
+
 
 		[Size(SizeAttribute.DefaultStringMappingFieldSize)]
 		public string ViewId
 		{
-			get => viewId;
-			set => SetPropertyValue( ref viewId, value);
+			get;
+			set;
 		}
 
 
 		public Guid PermissionPolicyUser
 		{
-			get => permissionPolicyUser;
-			set => SetPropertyValue( ref permissionPolicyUser, value);
+			get;
+			set;
 		}
 
 		
 		[Size(SizeAttribute.Unlimited)]
 		public string Layout
 		{
-			get => layout;
-			set => SetPropertyValue( ref layout, value);
+			get;
+			set;
 		}
 
+	}
+
+	public static class MemoryStorage
+	{ 
+	
+		public static List<BlazorLayoutStorage> LayoutList { get; set; }
+	
 	}
 }

@@ -12,7 +12,7 @@ using System.Text.Json;
 using Microsoft.JSInterop;
 using BlazorGridTests.Blazor.Server;
 using DevExpress.ExpressApp.Blazor;
-using GridWithContextMenu.Data;
+
 using BlazorGridTests.Module.BusinessObjects;
 
 namespace BlazorGridTests.Module.Controllers
@@ -23,7 +23,7 @@ namespace BlazorGridTests.Module.Controllers
         IJSRuntime JSRuntime;
         IObjectSpace objectSpace;
 
-        GridContextMenuContainer ContextMenuContainer { get; set; }
+
 
 
         public GridCustomizeController() : base()
@@ -98,7 +98,14 @@ namespace BlazorGridTests.Module.Controllers
 
         private string GetLayout()
         {
-            var storage = objectSpace.GetObjectsQuery<BlazorLayoutStorage>()
+
+            if (MemoryStorage.LayoutList == null)
+            {
+                MemoryStorage.LayoutList = new List<BlazorLayoutStorage>();
+                return null;
+            }
+
+            var storage = MemoryStorage.LayoutList
      .Where(s => s.ViewId == LocalStorageKey && s.PermissionPolicyUser == (Guid)SecuritySystem.CurrentUserId).FirstOrDefault();
             return storage != null ? storage.Layout : null;
         }
@@ -119,17 +126,20 @@ namespace BlazorGridTests.Module.Controllers
 
         private void StoreLayout(string json)
         {
-            var storage = objectSpace.GetObjectsQuery<BlazorLayoutStorage>()
+            var storage = MemoryStorage.LayoutList
                 .Where(s => s.ViewId == LocalStorageKey && s.PermissionPolicyUser == (Guid)SecuritySystem.CurrentUserId).FirstOrDefault();
             if (storage == null)
             {
-                storage = objectSpace.CreateObject<BlazorLayoutStorage>();
+                storage = new BlazorLayoutStorage();
+
+
+                MemoryStorage.LayoutList.Add(storage);
                 storage.ViewId = LocalStorageKey;
                 storage.PermissionPolicyUser = (Guid)SecuritySystem.CurrentUserId;
             }
             storage.Layout = json;
            
-            objectSpace.CommitChanges();
+          
         }
     }
 
